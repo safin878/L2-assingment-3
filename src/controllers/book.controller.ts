@@ -7,13 +7,11 @@ export const createBook = async (req: Request, res: Response) => {
   try {
     const book = new Book(req.body);
     await book.save();
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Book Created Successfully",
-        data: book,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Book Created Successfully",
+      data: book,
+    });
   } catch (error) {
     res
       .status(400)
@@ -31,7 +29,7 @@ export const getAllBooks = async (req: Request, res: Response) => {
       sort = "asc",
       limit = "10",
     } = req.query;
-    const query: any = {};
+    const query: Record<string, unknown> = {};
     if (filter) query.genre = filter;
     const books = await Book.find(query)
       .sort({ [sortBy as string]: sort === "desc" ? -1 : 1 })
